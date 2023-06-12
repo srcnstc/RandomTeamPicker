@@ -101,17 +101,6 @@ int main()
 	randomTeamPicker(&RL_Attack_Map, RL_ATTACK);
 	randomTeamPicker(&Forward_Map, FORWARD);
 
-	/*auto it = pool_g.find(playerName);
-	if (it != pool_g.end())
-		PlayerList.insert({ it->first, it->second });
-
-
-	for (int i = 0; i < n; i++)
-		res = res + alphabet[rand() % MAX];
-		*/
-
-
-
 	std::cout << "\nP.tesi - 22.00-23.00 Aydin Oral Oyuncu Listesi: \n";
 	std::cout << "\nTeam-A: \n";
 	printTeams(&TeamA);
