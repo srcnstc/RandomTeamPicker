@@ -1,4 +1,4 @@
-﻿// Author: Sercan SATICI
+// Author: Sercan SATICI
 
 // Bu program mevkilerine ayrılmis oyuncu grubunu halısahada rastgele seçmek için oluşturulmuştur.
 
@@ -6,6 +6,7 @@
 #include "time.h"
 #include <string>
 #include <map>
+#include <random>
 
 enum Position {
 	GOALKEEPER,
@@ -51,6 +52,23 @@ void printTeams(Player* Team);
 void insertPosMap(Player* TeamMap, Player* PosMap, Position pos);
 void randomTeamPicker(Player* TeamMap, Position pos);
 
+template<typename Key, typename Value>
+void shuffleMap(std::map<Key, Value>& myMap) {
+	std::vector<std::pair<Key, Value>> tempVec;
+	for (const auto& pair : myMap) {
+		tempVec.push_back(pair);
+	}
+
+	std::random_device rd;
+	std::mt19937 rng(rd());
+	std::shuffle(tempVec.begin(), tempVec.end(), rng);
+
+	myMap.clear();
+	for (const auto& pair : tempVec) {
+		myMap.insert(pair);
+	}
+}
+
 /*Global variables*/
 Player TeamA;
 Player TeamB;
@@ -58,8 +76,6 @@ Teams lastOrderFlag = B;
 
 int main()
 {
-	srand(time(NULL));
-
 	Player PlayerList;
 	std::cout << "Oyuncu Havuzu:";
 	printTeams(&pool_g);
@@ -79,7 +95,9 @@ int main()
 		}
 	}
 		
+	shuffleMap(PlayerList);
 	//printTeams(&PlayerList);
+
 
 	Player GK_Map;			insertPosMap(&PlayerList, &GK_Map,			GOALKEEPER);
 	Player Defender_Map;	insertPosMap(&PlayerList, &Defender_Map,	DEFENDER);
@@ -100,6 +118,7 @@ int main()
 	randomTeamPicker(&Midfielder_Map, MIDFIELDER);
 	randomTeamPicker(&RL_Attack_Map, RL_ATTACK);
 	randomTeamPicker(&Forward_Map, FORWARD);
+
 
 	std::cout << "\nP.tesi - 22.00-23.00 Aydin Oral Oyuncu Listesi: \n";
 	std::cout << "\nTeam-A: \n";
